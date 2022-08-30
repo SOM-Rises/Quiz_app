@@ -1,3 +1,5 @@
+// MODAL
+
 const quizData = [
   {
     question: "What is the most used programming language in 2019?",
@@ -41,60 +43,57 @@ const text_b = document.getElementById("text_b");
 const text_c = document.getElementById("text_c");
 const text_d = document.getElementById("text_d");
 const submitBtn = document.getElementById("submitBtn");
-const quiz = document.getElementById('quiz');
+const quiz = document.getElementById("quiz");
 
-const getSelect = () =>{
-    const answerEls = document.querySelectorAll(".answer");
-    let answer = undefined;
-    answerEls.forEach((answerEl)=>{
-            if(answerEl.checked){
-              answer = answerEl.id;
-              return answer;
-            }
-    })
-    return answer;
-}
+// CONTROL
 
-const deselect = () =>{
+// if the radio button selected
+const getSelect = () => {
   const answerEls = document.querySelectorAll(".answer");
-  answerEls.forEach((answerEl)=>{
-    answerEl.checked = false;
-})
-}
-
-  const questionfunc = () => {
-    deselect();
-    const quiz_question = quizData[question_number];
-    question_head.innerText = quiz_question.question;
-  
-    text_a.innerText = quiz_question.a;
-    text_b.innerText = quiz_question.b;
-    text_c.innerText = quiz_question.c;
-    text_d.innerText = quiz_question.d;
-    
-  };
-  questionfunc();
-
-
-  submitBtn.addEventListener("click", () => {
-    let answer = getSelect();
-    if(answer){
-      if(answer === quizData[question_number].correct){
-        score++;
-        console.log(score);
-      }
-      question_number++;
-
-      if (question_number < quizData.length) {
-        questionfunc();
-      } else {
-        quiz.innerHTML = `<h1>Your Final Score is ${score}/${quizData.length}.</h1> <button onclick="location.reload()">reload</button>`;
-      }
+  let answer = undefined;
+  answerEls.forEach((answerEl) => {
+    if (answerEl.checked) {
+      answer = answerEl.id;
+      return answer;
     }
-   
-    
   });
+  return answer;
+};
 
- 
+// deselect the radio button after another question
 
+const deselect = () => {
+  const answerEls = document.querySelectorAll(".answer");
+  answerEls.forEach((answerEl) => {
+    answerEl.checked = false;
+  });
+};
 
+const questionfunc = () => {
+  deselect();
+  const quiz_question = quizData[question_number];
+  question_head.innerText = quiz_question.question;
+
+  text_a.innerText = quiz_question.a;
+  text_b.innerText = quiz_question.b;
+  text_c.innerText = quiz_question.c;
+  text_d.innerText = quiz_question.d;
+};
+questionfunc();
+
+submitBtn.addEventListener("click", () => {
+  let answer = getSelect();
+  if (answer) {
+    if (answer === quizData[question_number].correct) {
+      score++;
+      console.log(score);
+    }
+    question_number++;
+
+    if (question_number < quizData.length) {
+      questionfunc();
+    } else {
+      quiz.innerHTML = `<h1>Your Final Score is ${score}/${quizData.length}.</h1> <button onclick="location.reload()">reload</button>`;
+    }
+  }
+});
